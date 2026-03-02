@@ -88,18 +88,11 @@
   /* HERO */
   .hero {
     min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 70px 5% 0;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
     position: relative;
     overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute; top: 0; right: 0;
-    width: 55%; height: 100%;
-    background: linear-gradient(135deg, transparent 30%, rgba(16,185,129,0.05) 100%);
-    pointer-events: none;
   }
 
   .hero-grid-bg {
@@ -108,9 +101,20 @@
       linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px);
     background-size: 60px 60px;
+    z-index: 0;
   }
 
-  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  /* HERO LAYOUT — left text column */
+  .hero-inner {
+    position: relative; z-index: 3;
+    width: 52%;
+    display: flex;
+    align-items: center;
+    padding: 120px 4% 80px 5%;
+    flex-shrink: 0;
+  }
+
+  .hero-content { width: 100%; max-width: 600px; }
 
   .hero-badge {
     display: inline-flex; align-items: center; gap: 0.5rem;
@@ -140,7 +144,7 @@
 
   .hero h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
     line-height: 0.9;
     letter-spacing: 2px;
     margin-bottom: 1.5rem;
@@ -221,6 +225,192 @@
     text-transform: uppercase;
     margin-top: 0.3rem;
   }
+
+  /* ── HERO IMAGE — RIGHT COLUMN PANEL ── */
+  .hero-image-wrap {
+    position: relative;
+    width: 48%;
+    min-height: 100vh;
+    flex-shrink: 0;
+    z-index: 2;
+    animation: fadeInRight 0.9s ease 0.4s forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Left edge blend into dark bg */
+  .hero-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100px; height: 100%;
+    background: linear-gradient(to right, var(--black), transparent);
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  /* Bottom fade */
+  .hero-image-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 140px;
+    background: linear-gradient(to top, var(--black), transparent);
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  /* Decorative corner accent */
+  .hero-image-corner {
+    position: absolute;
+    top: 90px; right: 28px;
+    width: 60px; height: 60px;
+    border-top: 2px solid rgba(16,185,129,0.7);
+    border-right: 2px solid rgba(16,185,129,0.7);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Glow */
+  .hero-image-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(16,185,129,0.08) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Image box fills the entire right column */
+  .hero-image-box {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 2;
+    background: linear-gradient(160deg, #0d0d0d 0%, #0a1f16 50%, #0d0d0d 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    cursor: pointer;
+  }
+
+  /* Silhouette SVG placeholder */
+  .hero-image-box svg {
+    width: 280px;
+    height: auto;
+    opacity: 0.12;
+    filter: drop-shadow(0 0 60px rgba(16,185,129,0.5));
+  }
+
+  .hero-image-box .placeholder-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(16,185,129,0.5);
+    border: 1px dashed rgba(16,185,129,0.3);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2px;
+  }
+
+  /* Scan-line overlay for style */
+  .hero-image-box::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.06) 3px,
+      rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Small floating stat badge */
+  .img-stat-badge {
+    position: absolute;
+    bottom: 160px;
+    left: -10px;
+    background: rgba(17,17,17,0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(16,185,129,0.4);
+    border-radius: 4px;
+    padding: 0.9rem 1.2rem;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    animation: floatBadge 3s ease-in-out infinite;
+  }
+
+  @keyframes floatBadge {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+  }
+
+  .img-stat-badge .badge-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--emerald);
+    box-shadow: 0 0 8px var(--emerald);
+    flex-shrink: 0;
+  }
+
+  .img-stat-badge .badge-text {
+    font-size: 0.75rem;
+    line-height: 1.3;
+    color: var(--gray-light);
+  }
+
+  .img-stat-badge .badge-text strong {
+    display: block;
+    color: var(--emerald);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  /* Replace image instruction tag */
+  .replace-hint {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(16,185,129,0.15);
+    border: 1px dashed rgba(16,185,129,0.4);
+    border-radius: 3px;
+    font-size: 0.65rem;
+    color: var(--emerald);
+    letter-spacing: 1px;
+    padding: 0.3rem 0.6rem;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* When real image is loaded, hide placeholder elements */
+  .hero-image-box.has-image svg,
+  .hero-image-box.has-image .placeholder-label,
+  .hero-image-box.has-image .replace-hint {
+    display: none;
+  }
+
+  .hero-image-box img.real-img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 1;
+    display: block;
+  }
+
+  /* ── END HERO IMAGE ── */
 
   /* SECTION COMMON */
   section { padding: 100px 5%; }
@@ -929,9 +1119,32 @@
   .mobile-menu a:hover { color: var(--emerald); }
 
   /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { width: 55%; padding: 100px 3% 60px 4%; }
+    .hero-image-wrap { width: 45%; }
+  }
+
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .hamburger { display: flex; }
+    .hero {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .hero-inner {
+      width: 100%;
+      padding: 100px 5% 40px;
+    }
+    .hero-image-wrap {
+      width: 100%;
+      min-height: 50vh;
+    }
+    .hero-image-wrap::before {
+      width: 100%; height: 100px;
+      top: 0; left: 0;
+      background: linear-gradient(to bottom, var(--black), transparent);
+    }
+    .img-stat-badge { display: none; }
     .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
     .step::after { display: none; }
     .dashboard-header { flex-direction: column; align-items: flex-start; }
@@ -964,7 +1177,7 @@
 
 <!-- NAVIGATION -->
 <nav>
-  <a href="#" class="nav-logo">ELITE<span>FIT</span></a>
+  <a href="#" class="nav-logo">TRAIN<span>WITH<span>-KARZ</span></a>
   <ul class="nav-links">
     <li><a href="#features">About</a></li>
     <li><a href="#process">Process</a></li>
@@ -988,20 +1201,60 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-grid-bg"></div>
-  <div class="hero-content">
-    <div class="hero-badge">Online Fitness Coaching</div>
-    <h1>TRANSFORM<br><span class="line-green">YOUR BODY.</span><br>ELEVATE YOUR LIFE.</h1>
-    <p>Premium personalised online coaching built around your goals, your schedule, and your life. Every rep, every meal, every check-in — I'm with you.</p>
-    <div class="hero-buttons">
-      <a href="#pricing" class="btn-primary">View Plans</a>
-      <a href="#dashboard" class="btn-secondary">Client Portal</a>
+
+  <!-- FULL SCREEN BACKGROUND IMAGE — sits behind everything -->
+  <div class="hero-image-wrap">
+    <div class="hero-image-glow"></div>
+    <div class="hero-image-corner"></div>
+    <div class="hero-image-box" id="heroImageBox">
+      <img src="img\2.karz_img.jpg">
+      <svg viewBox="0 0 200 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="32" rx="22" ry="24" fill="#10b981"/>
+        <rect x="90" y="52" width="20" height="18" rx="4" fill="#10b981"/>
+        <path d="M42 130 C42 95 60 72 100 68 C140 72 158 95 158 130 L152 175 L48 175 Z" fill="#10b981"/>
+        <path d="M42 95 C28 100 18 118 22 140 L36 145 C34 126 40 110 52 104 Z" fill="#10b981"/>
+        <path d="M22 140 C18 160 22 178 30 185 L42 180 C36 173 34 158 36 145 Z" fill="#10b981"/>
+        <path d="M158 95 C172 100 182 118 178 140 L164 145 C166 126 160 110 148 104 Z" fill="#10b981"/>
+        <path d="M178 140 C182 160 178 178 170 185 L158 180 C164 173 166 158 164 145 Z" fill="#10b981"/>
+        <path d="M56 175 L52 210 L148 210 L144 175 Z" fill="#10b981"/>
+        <path d="M52 210 C46 240 48 265 52 285 L78 285 C76 265 76 240 76 210 Z" fill="#10b981"/>
+        <path d="M52 285 C50 305 52 320 56 330 L76 330 C74 320 76 305 78 285 Z" fill="#10b981"/>
+        <path d="M148 210 C154 240 152 265 148 285 L122 285 C124 265 124 240 124 210 Z" fill="#10b981"/>
+        <path d="M148 285 C150 305 148 320 144 330 L124 330 C126 320 124 305 122 285 Z" fill="#10b981"/>
+        <path d="M72 90 L100 105 L128 90" stroke="rgba(0,0,0,0.2)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M80 105 L100 118 L120 105" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="placeholder-label">Your Photo Here</span>
+      <input type="file" id="heroImageInput" accept="image/*" style="display:none" onchange="setHeroImage(event)">
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="num">150+</div><div class="label">Clients Coached</div></div>
-      <div class="hero-stat"><div class="num">92%</div><div class="label">Goal Achievement</div></div>
-      <div class="hero-stat"><div class="num">5★</div><div class="label">Average Rating</div></div>
+    <!-- Floating stat badge -->
+    <div class="img-stat-badge">
+      <div class="badge-dot"></div>
+      <div class="badge-text">
+        <strong>500+ KG LOST</strong>
+        Across all clients
+      </div>
     </div>
   </div>
+
+  <!-- TEXT CONTENT — layered on top -->
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">Online Fitness Coaching</div>
+      <h1>TRANSFORM<br><span class="line-green">YOUR BODY.</span><br>ELEVATE YOUR LIFE.</h1>
+      <p>Premium personalised online coaching built around your goals, your schedule, and your life. Every rep, every meal, every check-in — I'm with you.</p>
+      <div class="hero-buttons">
+        <a href="#pricing" class="btn-primary">View Plans</a>
+        <a href="#dashboard" class="btn-secondary">Client Portal</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">150+</div><div class="label">Clients Coached</div></div>
+        <div class="hero-stat"><div class="num">92%</div><div class="label">Goal Achievement</div></div>
+        <div class="hero-stat"><div class="num">5★</div><div class="label">Average Rating</div></div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- FEATURES -->
@@ -1407,6 +1660,32 @@ let clients = [
   { name: 'Arjun Patel', plan: '5 Month – ₹25,000', weight: 91.0, startDate: '2025-04-01', streak: 18 },
   { name: 'Sneha Reddy', plan: '3 Month – ₹18,000', weight: 58.5, startDate: '2025-06-01', streak: 3 },
 ];
+
+// ====== HERO IMAGE UPLOAD ======
+function triggerImageUpload() {
+  document.getElementById('heroImageInput').click();
+}
+
+function setHeroImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const box = document.getElementById('heroImageBox');
+    // Remove existing real image if any
+    const existing = box.querySelector('.real-img');
+    if (existing) existing.remove();
+    // Add new image
+    const img = document.createElement('img');
+    img.className = 'real-img';
+    img.src = e.target.result;
+    img.alt = 'Coach';
+    box.prepend(img);
+    box.classList.add('has-image');
+    showToast('✓ Hero image updated!');
+  };
+  reader.readAsDataURL(file);
+}
 
 // ====== TABS ======
 function switchTab(name) {
