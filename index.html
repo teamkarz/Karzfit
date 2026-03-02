@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Fitness Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --black-2: #111111;
+    --black-3: #1a1a1a;
+    --black-4: #242424;
+    --emerald: #10b981;
+    --emerald-light: #34d399;
+    --emerald-dark: #059669;
+    --emerald-glow: rgba(16,185,129,0.15);
+    --white: #f5f5f5;
+    --gray: #888888;
+    --gray-light: #cccccc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black-2); }
+  ::-webkit-scrollbar-thumb { background: var(--emerald); border-radius: 2px; }
+
+  /* NAVIGATION */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(16,185,129,0.2);
+    padding: 0 5%;
+    height: 70px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--emerald); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    color: var(--gray-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--emerald); }
+
+  .nav-cta {
+    background: var(--emerald) !important;
+    color: var(--black) !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 3px;
+    font-weight: 700 !important;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--emerald-light) !important; }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px;
+  }
+  .hamburger span {
+    display: block; width: 25px; height: 2px; background: var(--white); transition: 0.3s;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 70px 5% 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 55%; height: 100%;
+    background: linear-gradient(135deg, transparent 30%, rgba(16,185,129,0.05) 100%);
+    pointer-events: none;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--emerald);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .line-green { color: var(--emerald); }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--gray-light);
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--emerald);
+    color: var(--black);
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover {
+    background: var(--emerald-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(16,185,129,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 3px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--emerald);
+    color: var(--emerald);
+  }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .hero-stat .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--emerald);
+    line-height: 1;
+  }
+  .hero-stat .label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* SECTION COMMON */
+  section { padding: 100px 5%; }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--gray-light);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 3rem;
+  }
+
+  /* PRICING */
+  #pricing { background: var(--black-2); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .pricing-card {
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .pricing-card:hover {
+    border-color: rgba(16,185,129,0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(16,185,129,0.1);
+  }
+
+  .pricing-card.featured {
+    border-color: var(--emerald);
+    background: linear-gradient(135deg, var(--black-3), rgba(16,185,129,0.07));
+  }
+
+  .pricing-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--emerald);
+    color: var(--black);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 20px;
+  }
+
+  .pricing-duration {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 1rem;
+  }
+
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .pricing-price span {
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--gray);
+  }
+
+  .pricing-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 1.5rem 0;
+  }
+
+  .pricing-features { list-style: none; }
+
+  .pricing-features li {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.9rem;
+    color: var(--gray-light);
+    padding: 0.5rem 0;
+    font-weight: 400;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--emerald);
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .pricing-btn {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0.9rem;
+    background: transparent;
+    border: 1px solid rgba(16,185,129,0.4);
+    color: var(--emerald);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .pricing-btn:hover, .pricing-card.featured .pricing-btn {
+    background: var(--emerald);
+    color: var(--black);
+    border-color: var(--emerald);
+  }
+
+  /* CLIENT DASHBOARD */
+  #dashboard { background: var(--black); }
+
+  .dashboard-container {
+    background: var(--black-2);
+    border: 1px solid rgba(16,185,129,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .dashboard-header {
+    background: var(--black-3);
+    border-bottom: 1px solid rgba(16,185,129,0.15);
+    padding: 1.5rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .dashboard-header h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .client-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--gray);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--emerald);
+    border-color: var(--emerald);
+    color: var(--black);
+  }
+
+  .dashboard-body { padding: 2rem; }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* CHECKIN PANEL */
+  .checkin-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--emerald);
+  }
+
+  .form-input, .form-select, .form-textarea {
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--emerald);
+  }
+
+  .form-textarea { resize: vertical; min-height: 80px; }
+
+  .form-select option { background: var(--black-3); }
+
+  .submit-checkin {
+    background: var(--emerald);
+    color: var(--black);
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 4px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .submit-checkin:hover { background: var(--emerald-light); }
+
+  /* PROGRESS TABLE */
+  .progress-table-wrap { overflow-x: auto; }
+
+  .progress-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .progress-table th {
+    background: var(--black-3);
+    padding: 0.85rem 1.2rem;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    border-bottom: 1px solid rgba(16,185,129,0.2);
+    white-space: nowrap;
+  }
+
+  .progress-table td {
+    padding: 0.85rem 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--gray-light);
+    white-space: nowrap;
+  }
+
+  .progress-table tr:last-child td { border-bottom: none; }
+  .progress-table tr:hover td { background: rgba(16,185,129,0.03); }
+
+  .trend-up { color: var(--emerald); font-weight: 600; }
+  .trend-down { color: #ef4444; font-weight: 600; }
+  .trend-same { color: var(--gray); }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .stat-card .s-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-card .s-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--emerald);
+    line-height: 1;
+  }
+
+  .stat-card .s-change {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 0.3rem;
+  }
+
+  /* WEIGHT CHART */
+  .chart-area {
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .chart-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1.2rem;
+  }
+
+  canvas#weightChart { width: 100% !important; max-height: 220px; }
+
+  /* PHOTO UPLOAD */
+  .photo-upload-area {
+    border: 2px dashed rgba(16,185,129,0.3);
+    border-radius: 6px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-upload-area:hover {
+    border-color: var(--emerald);
+    background: rgba(16,185,129,0.03);
+  }
+
+  .upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .upload-text {
+    font-size: 1rem;
+    color: var(--gray-light);
+    margin-bottom: 0.4rem;
+  }
+
+  .upload-sub {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+
+  #fileInput { display: none; }
+
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .photo-thumb {
+    aspect-ratio: 3/4;
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .photo-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .photo-thumb .photo-date {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.7);
+    font-size: 0.65rem;
+    color: var(--emerald);
+    padding: 0.3rem 0.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  /* CLIENT LIST */
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .client-card {
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .client-card:hover {
+    border-color: rgba(16,185,129,0.4);
+    transform: translateY(-2px);
+  }
+
+  .client-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--emerald-dark), var(--emerald));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--black);
+    margin-bottom: 1rem;
+  }
+
+  .client-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .client-plan {
+    font-size: 0.75rem;
+    color: var(--emerald);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .client-meta {
+    display: flex; gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .client-meta .m-item {
+    font-size: 0.75rem;
+    color: var(--gray);
+  }
+
+  .client-meta .m-item strong {
+    display: block;
+    color: var(--white);
+    font-size: 0.9rem;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--emerald);
+    margin-right: 0.4rem;
+  }
+
+  /* FEATURES SECTION */
+  #features { background: var(--black-2); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: var(--black-3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(16,185,129,0.3);
+    box-shadow: 0 0 30px rgba(16,185,129,0.05);
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+  }
+
+  .feature-desc {
+    font-size: 0.875rem;
+    color: var(--gray-light);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* HOW IT WORKS */
+  #process { background: var(--black); }
+
+  .steps-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    margin-top: 3rem;
+    position: relative;
+  }
+
+  .step {
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: rgba(16,185,129,0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.7rem;
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .step::after {
+    content: '→';
+    position: absolute; right: -12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--emerald);
+    font-size: 1.2rem;
+    z-index: 2;
+  }
+
+  .step:last-child::after { display: none; }
+
+  /* CTA SECTION */
+  #cta {
+    background: linear-gradient(135deg, var(--black-2), rgba(16,185,129,0.08));
+    border-top: 1px solid rgba(16,185,129,0.15);
+    border-bottom: 1px solid rgba(16,185,129,0.15);
+    text-align: center;
+    padding: 100px 5%;
+  }
+
+  #cta .section-title { font-size: clamp(2.5rem, 6vw, 5rem); }
+  #cta .section-sub { margin: 0 auto 3rem; text-align: center; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black-2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 3rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--emerald); }
+
+  .footer-text {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--black-2);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 8px;
+    padding: 2.5rem;
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .modal h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal .form-group { margin-bottom: 1.2rem; }
+
+  .modal-actions {
+    display: flex; gap: 1rem; margin-top: 1.5rem;
+  }
+
+  .modal-close {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--gray-light);
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    flex: 1;
+    transition: 0.2s;
+  }
+  .modal-close:hover { border-color: rgba(255,255,255,0.4); }
+
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--black-3);
+    border: 1px solid var(--emerald);
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--emerald);
+    z-index: 3000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s;
+    max-width: 300px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* MOBILE NAV MENU */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 70px; left: 0; right: 0;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(16,185,129,0.2);
+    padding: 1.5rem 5%;
+    z-index: 999;
+    flex-direction: column; gap: 1rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--gray-light); text-decoration: none;
+    font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--emerald); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .step::after { display: none; }
+    .dashboard-header { flex-direction: column; align-items: flex-start; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    section { padding: 70px 5%; }
+    .checkin-form { grid-template-columns: 1fr; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content > * {
+    animation: fadeInUp 0.7s ease forwards;
+    opacity: 0;
+  }
+  .hero-badge { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.25s; }
+  .hero p { animation-delay: 0.4s; }
+  .hero-buttons { animation-delay: 0.55s; }
+  .hero-stats { animation-delay: 0.7s; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="nav-logo">ELITE<span>FIT</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#dashboard">Client Portal</a></li>
+    <li><a href="#cta" class="nav-cta">Start Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features" onclick="closeMobileMenu()">About</a>
+  <a href="#process" onclick="closeMobileMenu()">Process</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="#dashboard" onclick="closeMobileMenu()">Client Portal</a>
+  <a href="#cta" onclick="closeMobileMenu()">Start Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Online Fitness Coaching</div>
+    <h1>TRANSFORM<br><span class="line-green">YOUR BODY.</span><br>ELEVATE YOUR LIFE.</h1>
+    <p>Premium personalised online coaching built around your goals, your schedule, and your life. Every rep, every meal, every check-in — I'm with you.</p>
+    <div class="hero-buttons">
+      <a href="#pricing" class="btn-primary">View Plans</a>
+      <a href="#dashboard" class="btn-secondary">Client Portal</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">150+</div><div class="label">Clients Coached</div></div>
+      <div class="hero-stat"><div class="num">92%</div><div class="label">Goal Achievement</div></div>
+      <div class="hero-stat"><div class="num">5★</div><div class="label">Average Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-tag">Why Choose Elite Coaching</div>
+  <h2 class="section-title">COACHING THAT<br>ACTUALLY WORKS</h2>
+  <p class="section-sub">Every programme is built around you — your body, your life, your goals. No templates. No guesswork.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🏋️</span>
+      <div class="feature-title">Custom Training Plans</div>
+      <p class="feature-desc">Weekly updated workout programmes tailored to your equipment, schedule, and fitness level.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🥗</span>
+      <div class="feature-title">Nutrition Guidance</div>
+      <p class="feature-desc">Detailed macro targets and meal strategies aligned with your body composition goals.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-title">Daily Check-ins</div>
+      <p class="feature-desc">Log your weight, energy, and sleep every day so I can monitor and adjust in real time.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📸</span>
+      <div class="feature-title">Weekly Progress Photos</div>
+      <p class="feature-desc">Upload your weekly photos securely. Track your visual transformation over time.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💬</span>
+      <div class="feature-title">Direct Coach Access</div>
+      <p class="feature-desc">Reach me directly any time. I respond to messages within 24 hours, every day.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📈</span>
+      <div class="feature-title">Progress Analytics</div>
+      <p class="feature-desc">Visual weight tracking, trend analysis and milestone reporting throughout your programme.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">YOUR JOURNEY<br>STARTS HERE</h2>
+  <p class="section-sub">From sign-up to transformation — a clear, structured process.</p>
+  <div class="steps-list">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Choose Your Plan</div>
+      <p class="step-desc">Select the duration that works best for your goals — 3, 4, or 5 months.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Intake Assessment</div>
+      <p class="step-desc">Complete a detailed intake form covering your stats, goals, lifestyle, and history.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Custom Plan Built</div>
+      <p class="step-desc">Receive your fully personalised training and nutrition plan within 48 hours.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Daily Check-ins</div>
+      <p class="step-desc">Log your data every day — weight, sleep, energy, and notes via the client portal.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-title">Weekly Reviews</div>
+      <p class="step-desc">Every week I review your data, photos, and progress and adjust your plan accordingly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-tag">Investment in Yourself</div>
+  <h2 class="section-title">COACHING PLANS</h2>
+  <p class="section-sub">One-time payment. Full access. No hidden fees. Choose the programme length that fits your transformation timeline.</p>
+  <div class="pricing-grid">
+
+    <div class="pricing-card">
+      <div class="pricing-duration">3 Month Programme</div>
+      <div class="pricing-price">₹18,000 <span>/ one-time</span></div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Custom 3-month training plan</li>
+        <li>Personalised nutrition targets</li>
+        <li>Daily check-in portal access</li>
+        <li>Weekly photo progress tracking</li>
+        <li>Weekly plan adjustments</li>
+        <li>Coach messaging support</li>
+        <li>Progress analytics dashboard</li>
+      </ul>
+      <button class="pricing-btn" onclick="openModal('3 Month', '₹18,000')">Get Started</button>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Most Popular</div>
+      <div class="pricing-duration">4 Month Programme</div>
+      <div class="pricing-price">₹22,000 <span>/ one-time</span></div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Custom 4-month training plan</li>
+        <li>Personalised nutrition targets</li>
+        <li>Daily check-in portal access</li>
+        <li>Weekly photo progress tracking</li>
+        <li>Weekly plan adjustments</li>
+        <li>Coach messaging support</li>
+        <li>Progress analytics dashboard</li>
+        <li>Monthly strategy call</li>
+      </ul>
+      <button class="pricing-btn" onclick="openModal('4 Month', '₹22,000')">Get Started</button>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-duration">5 Month Programme</div>
+      <div class="pricing-price">₹25,000 <span>/ one-time</span></div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Custom 5-month training plan</li>
+        <li>Personalised nutrition targets</li>
+        <li>Daily check-in portal access</li>
+        <li>Weekly photo progress tracking</li>
+        <li>Weekly plan adjustments</li>
+        <li>Coach messaging support</li>
+        <li>Progress analytics dashboard</li>
+        <li>Monthly strategy calls</li>
+        <li>Post-programme maintenance plan</li>
+      </ul>
+      <button class="pricing-btn" onclick="openModal('5 Month', '₹25,000')">Get Started</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- CLIENT DASHBOARD -->
+<section id="dashboard">
+  <div class="section-tag">Client Portal</div>
+  <h2 class="section-title">TRACK YOUR<br>PROGRESS</h2>
+  <p class="section-sub">Your personal hub for daily check-ins, weight tracking, and weekly photo uploads. All in one place.</p>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h3>📊 Client Dashboard</h3>
+      <div class="client-tabs">
+        <button class="tab-btn active" onclick="switchTab('checkin')">Daily Check-in</button>
+        <button class="tab-btn" onclick="switchTab('progress')">Weight Progress</button>
+        <button class="tab-btn" onclick="switchTab('photos')">Weekly Photos</button>
+        <button class="tab-btn" onclick="switchTab('clients')">Manage Clients</button>
+      </div>
+    </div>
+
+    <div class="dashboard-body">
+
+      <!-- CHECK-IN TAB -->
+      <div class="tab-panel active" id="tab-checkin">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="s-label">This Week Avg</div>
+            <div class="s-value">78.4<span style="font-size:1rem;font-family:'Barlow',sans-serif;color:var(--gray)">kg</span></div>
+            <div class="s-change">↓ 0.6kg from last week</div>
+          </div>
+          <div class="stat-card">
+            <div class="s-label">Total Lost</div>
+            <div class="s-value">4.2<span style="font-size:1rem;font-family:'Barlow',sans-serif;color:var(--gray)">kg</span></div>
+            <div class="s-change">Since programme start</div>
+          </div>
+          <div class="stat-card">
+            <div class="s-label">Check-in Streak</div>
+            <div class="s-value">12<span style="font-size:1rem;font-family:'Barlow',sans-serif;color:var(--gray)">days</span></div>
+            <div class="s-change">Keep it up! 🔥</div>
+          </div>
+          <div class="stat-card">
+            <div class="s-label">Compliance</div>
+            <div class="s-value">94<span style="font-size:1rem;font-family:'Barlow',sans-serif;color:var(--gray)">%</span></div>
+            <div class="s-change">Excellent</div>
+          </div>
+        </div>
+
+        <div class="checkin-form">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" id="checkinDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Body Weight (kg)</label>
+            <input type="number" class="form-input" id="checkinWeight" placeholder="e.g. 78.5" step="0.1">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sleep Quality (1-10)</label>
+            <select class="form-select" id="checkinSleep">
+              <option value="">Select...</option>
+              <option>1 - Terrible</option>
+              <option>2</option><option>3</option><option>4</option>
+              <option>5 - Average</option>
+              <option>6</option><option>7</option><option>8</option>
+              <option>9</option><option>10 - Excellent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Energy Level (1-10)</label>
+            <select class="form-select" id="checkinEnergy">
+              <option value="">Select...</option>
+              <option>1 - Exhausted</option>
+              <option>2</option><option>3</option><option>4</option>
+              <option>5 - Average</option>
+              <option>6</option><option>7</option><option>8</option>
+              <option>9</option><option>10 - Energised</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Diet Adherence</label>
+            <select class="form-select" id="checkinDiet">
+              <option value="">Select...</option>
+              <option>100% On Track</option>
+              <option>80–99% Good</option>
+              <option>60–79% Okay</option>
+              <option>Below 60%</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Training Done?</label>
+            <select class="form-select" id="checkinTraining">
+              <option value="">Select...</option>
+              <option>Yes – Full Session</option>
+              <option>Yes – Modified</option>
+              <option>Rest Day</option>
+              <option>Missed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:1.5rem">
+          <label class="form-label">Notes / How Are You Feeling?</label>
+          <textarea class="form-textarea" id="checkinNotes" placeholder="Any additional notes, struggles, wins, or questions for your coach..."></textarea>
+        </div>
+        <button class="submit-checkin" onclick="submitCheckin()">Submit Check-in</button>
+      </div>
+
+      <!-- PROGRESS TAB -->
+      <div class="tab-panel" id="tab-progress">
+        <div class="chart-area">
+          <div class="chart-title">Weight Progress — Last 14 Days</div>
+          <canvas id="weightChart"></canvas>
+        </div>
+        <div class="progress-table-wrap" style="margin-top:1.5rem">
+          <table class="progress-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Weight (kg)</th>
+                <th>Change</th>
+                <th>Sleep</th>
+                <th>Energy</th>
+                <th>Diet</th>
+                <th>Training</th>
+              </tr>
+            </thead>
+            <tbody id="progressTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PHOTOS TAB -->
+      <div class="tab-panel" id="tab-photos">
+        <p style="color:var(--gray-light);font-size:0.9rem;margin-bottom:1.5rem">Upload your weekly progress photos below. Front, side, and back views recommended. Photos are stored privately and only visible to you and your coach.</p>
+        <div class="photo-upload-area" onclick="document.getElementById('fileInput').click()">
+          <span class="upload-icon">📷</span>
+          <div class="upload-text">Click to upload weekly photos</div>
+          <div class="upload-sub">JPG, PNG or WEBP — Max 10MB each</div>
+          <input type="file" id="fileInput" accept="image/*" multiple onchange="handlePhotoUpload(event)">
+        </div>
+        <div class="photos-grid" id="photosGrid">
+          <div class="photo-thumb" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem">
+            <span style="font-size:2rem">📸</span>
+            <span style="font-size:0.75rem;color:var(--gray);text-align:center">Week 1<br>Front</span>
+          </div>
+          <div class="photo-thumb" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem">
+            <span style="font-size:2rem">📸</span>
+            <span style="font-size:0.75rem;color:var(--gray);text-align:center">Week 2<br>Front</span>
+          </div>
+          <div class="photo-thumb" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.5rem">
+            <span style="font-size:2rem">📸</span>
+            <span style="font-size:0.75rem;color:var(--gray);text-align:center">Week 3<br>Front</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLIENTS TAB -->
+      <div class="tab-panel" id="tab-clients">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+          <p style="color:var(--gray-light);font-size:0.9rem">Manage all active coaching clients.</p>
+          <button class="submit-checkin" onclick="openAddClientModal()" style="padding:0.7rem 1.5rem">+ Add Client</button>
+        </div>
+        <div class="clients-grid" id="clientsGrid">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="section-tag">Ready to Transform?</div>
+  <h2 class="section-title">YOUR BEST BODY<br>IS ONE DECISION AWAY</h2>
+  <p class="section-sub">Stop waiting for the right time. The right time is now. Choose your plan and let's get to work.</p>
+  <a href="#pricing" class="btn-primary">Choose Your Plan</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ELITE<span>FIT</span></div>
+  <div class="footer-text">© 2025 EliteFit Coaching. All rights reserved. | Online Fitness Coaching</div>
+</footer>
+
+<!-- ENROLMENT MODAL -->
+<div class="modal-overlay" id="enrollModal">
+  <div class="modal">
+    <h3>ENROL NOW</h3>
+    <p style="color:var(--gray);font-size:0.85rem;margin-bottom:1.5rem" id="modalPlanLabel"></p>
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-input" id="enrollName" placeholder="Your full name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" id="enrollEmail" placeholder="your@email.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone Number</label>
+      <input type="tel" class="form-input" id="enrollPhone" placeholder="+91 XXXXX XXXXX">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Current Weight (kg)</label>
+      <input type="number" class="form-input" id="enrollWeight" placeholder="e.g. 80">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-close" onclick="closeModal()">Cancel</button>
+      <button class="submit-checkin" style="flex:1" onclick="submitEnrolment()">Submit Enquiry</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CLIENT MODAL -->
+<div class="modal-overlay" id="addClientModal">
+  <div class="modal">
+    <h3>ADD CLIENT</h3>
+    <div class="form-group">
+      <label class="form-label">Client Name</label>
+      <input type="text" class="form-input" id="newClientName" placeholder="Full name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Programme</label>
+      <select class="form-select" id="newClientPlan">
+        <option>3 Month – ₹18,000</option>
+        <option>4 Month – ₹22,000</option>
+        <option>5 Month – ₹25,000</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Start Weight (kg)</label>
+      <input type="number" class="form-input" id="newClientWeight" placeholder="e.g. 85">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-close" onclick="document.getElementById('addClientModal').classList.remove('open')">Cancel</button>
+      <button class="submit-checkin" style="flex:1" onclick="addClient()">Add Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CHART.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+<script>
+// ====== DATA ======
+const checkins = [
+  { date: '2025-06-01', weight: 82.6, sleep: '7 – Good', energy: '6 – Moderate', diet: '80–99% Good', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-02', weight: 82.3, sleep: '8 – Good', energy: '7 – Good', diet: '100% On Track', training: 'Rest Day', notes: '' },
+  { date: '2025-06-03', weight: 82.1, sleep: '6 – Average', energy: '6 – Moderate', diet: '80–99% Good', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-04', weight: 81.8, sleep: '7 – Good', energy: '8 – High', diet: '100% On Track', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-05', weight: 81.5, sleep: '9 – Great', energy: '8 – High', diet: '100% On Track', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-06', weight: 81.9, sleep: '5 – Average', energy: '5 – Average', diet: '60–79% Okay', training: 'Missed', notes: 'Busy day at work' },
+  { date: '2025-06-07', weight: 81.4, sleep: '8 – Good', energy: '7 – Good', diet: '80–99% Good', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-08', weight: 81.2, sleep: '8 – Good', energy: '8 – High', diet: '100% On Track', training: 'Yes – Modified', notes: '' },
+  { date: '2025-06-09', weight: 81.0, sleep: '7 – Good', energy: '7 – Good', diet: '100% On Track', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-10', weight: 80.7, sleep: '9 – Great', energy: '9 – High', diet: '100% On Track', training: 'Yes – Full Session', notes: 'Feeling great!' },
+  { date: '2025-06-11', weight: 80.5, sleep: '8 – Good', energy: '7 – Good', diet: '80–99% Good', training: 'Rest Day', notes: '' },
+  { date: '2025-06-12', weight: 80.3, sleep: '7 – Good', energy: '8 – High', diet: '100% On Track', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-13', weight: 80.1, sleep: '8 – Good', energy: '8 – High', diet: '100% On Track', training: 'Yes – Full Session', notes: '' },
+  { date: '2025-06-14', weight: 79.8, sleep: '9 – Great', energy: '9 – High', diet: '100% On Track', training: 'Yes – Full Session', notes: 'Best week yet!' },
+];
+
+let clients = [
+  { name: 'Rahul Sharma', plan: '4 Month – ₹22,000', weight: 82.6, startDate: '2025-05-01', streak: 14 },
+  { name: 'Priya Mehta', plan: '3 Month – ₹18,000', weight: 65.2, startDate: '2025-05-15', streak: 10 },
+  { name: 'Arjun Patel', plan: '5 Month – ₹25,000', weight: 91.0, startDate: '2025-04-01', streak: 18 },
+  { name: 'Sneha Reddy', plan: '3 Month – ₹18,000', weight: 58.5, startDate: '2025-06-01', streak: 3 },
+];
+
+// ====== TABS ======
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'progress') initChart();
+}
+
+// ====== CHECKIN SUBMIT ======
+document.getElementById('checkinDate').valueAsDate = new Date();
+
+function submitCheckin() {
+  const date = document.getElementById('checkinDate').value;
+  const weight = document.getElementById('checkinWeight').value;
+  if (!date || !weight) { showToast('Please enter date and weight.'); return; }
+  const entry = {
+    date, weight: parseFloat(weight),
+    sleep: document.getElementById('checkinSleep').value || '–',
+    energy: document.getElementById('checkinEnergy').value || '–',
+    diet: document.getElementById('checkinDiet').value || '–',
+    training: document.getElementById('checkinTraining').value || '–',
+    notes: document.getElementById('checkinNotes').value
+  };
+  checkins.push(entry);
+  document.getElementById('checkinWeight').value = '';
+  document.getElementById('checkinNotes').value = '';
+  showToast('✓ Check-in submitted successfully!');
+  renderProgressTable();
+}
+
+// ====== PROGRESS TABLE ======
+function renderProgressTable() {
+  const tbody = document.getElementById('progressTableBody');
+  const sorted = [...checkins].sort((a,b) => new Date(b.date) - new Date(a.date));
+  tbody.innerHTML = sorted.map((c, i) => {
+    const prev = sorted[i + 1];
+    const diff = prev ? (c.weight - prev.weight).toFixed(1) : null;
+    const trendClass = diff === null ? 'trend-same' : diff < 0 ? 'trend-up' : diff > 0 ? 'trend-down' : 'trend-same';
+    const trendStr = diff === null ? '–' : diff < 0 ? `↓ ${Math.abs(diff)}` : diff > 0 ? `↑ ${diff}` : '→ 0';
+    return `<tr>
+      <td>${formatDate(c.date)}</td>
+      <td><strong style="color:var(--white)">${c.weight} kg</strong></td>
+      <td class="${trendClass}">${trendStr}</td>
+      <td>${c.sleep.split('–')[0].trim() || '–'}</td>
+      <td>${c.energy.split('–')[0].trim() || '–'}</td>
+      <td>${c.diet}</td>
+      <td>${c.training}</td>
+    </tr>`;
+  }).join('');
+}
+
+function formatDate(d) {
+  const [y, m, day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${day} ${months[parseInt(m)-1]} ${y}`;
+}
+
+// ====== CHART ======
+let weightChart;
+function initChart() {
+  const ctx = document.getElementById('weightChart').getContext('2d');
+  if (weightChart) weightChart.destroy();
+  const last14 = checkins.slice(-14);
+  weightChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: last14.map(c => formatDate(c.date)),
+      datasets: [{
+        label: 'Weight (kg)',
+        data: last14.map(c => c.weight),
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.08)',
+        borderWidth: 2,
+        pointBackgroundColor: '#10b981',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        fill: true,
+        tension: 0.4,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          borderColor: '#10b981',
+          borderWidth: 1,
+          titleColor: '#10b981',
+          bodyColor: '#cccccc',
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#888', font: { size: 10 }, maxRotation: 45 },
+          grid: { color: 'rgba(255,255,255,0.04)' },
+        },
+        y: {
+          ticks: { color: '#888', font: { size: 11 } },
+          grid: { color: 'rgba(255,255,255,0.04)' },
+        }
+      }
+    }
+  });
+}
+
+// ====== PHOTOS ======
+function handlePhotoUpload(event) {
+  const files = Array.from(event.target.files);
+  const grid = document.getElementById('photosGrid');
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const div = document.createElement('div');
+      div.className = 'photo-thumb';
+      const today = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'2-digit' });
+      div.innerHTML = `<img src="${e.target.result}" alt="Progress photo"><div class="photo-date">${today}</div>`;
+      grid.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+  showToast(`✓ ${files.length} photo(s) uploaded!`);
+}
+
+// ====== CLIENTS ======
+function renderClients() {
+  const grid = document.getElementById('clientsGrid');
+  grid.innerHTML = clients.map((c, i) => {
+    const initials = c.name.split(' ').map(w => w[0]).join('').toUpperCase();
+    return `<div class="client-card">
+      <div class="client-avatar">${initials}</div>
+      <div class="client-name"><span class="status-dot"></span>${c.name}</div>
+      <div class="client-plan">${c.plan}</div>
+      <div class="client-meta">
+        <div class="m-item"><strong>${c.weight} kg</strong>Current</div>
+        <div class="m-item"><strong>${c.streak} days</strong>Streak</div>
+        <div class="m-item"><strong>${formatDateShort(c.startDate)}</strong>Started</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatDateShort(d) {
+  const [y, m, day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${day} ${months[parseInt(m)-1]}`;
+}
+
+function openAddClientModal() {
+  document.getElementById('addClientModal').classList.add('open');
+}
+
+function addClient() {
+  const name = document.getElementById('newClientName').value.trim();
+  const plan = document.getElementById('newClientPlan').value;
+  const weight = parseFloat(document.getElementById('newClientWeight').value);
+  if (!name) { showToast('Please enter client name.'); return; }
+  clients.push({ name, plan, weight: weight || 0, startDate: new Date().toISOString().split('T')[0], streak: 0 });
+  renderClients();
+  document.getElementById('addClientModal').classList.remove('open');
+  document.getElementById('newClientName').value = '';
+  document.getElementById('newClientWeight').value = '';
+  showToast(`✓ Client "${name}" added!`);
+}
+
+// ====== MODAL ======
+function openModal(plan, price) {
+  document.getElementById('modalPlanLabel').textContent = `${plan} Programme — ${price}`;
+  document.getElementById('enrollModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('enrollModal').classList.remove('open');
+}
+function submitEnrolment() {
+  const name = document.getElementById('enrollName').value.trim();
+  const email = document.getElementById('enrollEmail').value.trim();
+  if (!name || !email) { showToast('Please fill in name and email.'); return; }
+  closeModal();
+  showToast(`✓ Enquiry submitted! We'll contact you at ${email} shortly.`);
+  document.getElementById('enrollName').value = '';
+  document.getElementById('enrollEmail').value = '';
+  document.getElementById('enrollPhone').value = '';
+  document.getElementById('enrollWeight').value = '';
+}
+
+// ====== TOAST ======
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ====== MOBILE MENU ======
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// Close modals on overlay click
+document.getElementById('enrollModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('addClientModal').addEventListener('click', function(e) {
+  if (e.target === this) document.getElementById('addClientModal').classList.remove('open');
+});
+
+// ====== INIT ======
+renderProgressTable();
+renderClients();
+</script>
+</body>
+</html>
